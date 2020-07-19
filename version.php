@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020071901;
+$plugin->version = 2020071902;
 $plugin->requires = 2018120302.01;
 $plugin->cron = 0;
 $plugin->component = 'local_multiple_notifications';

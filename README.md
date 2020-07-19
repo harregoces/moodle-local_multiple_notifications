@@ -1,12 +1,11 @@
 Moodle "Multiple notifications"
 ===============================
 
-![screenshot](pix/screenshot.jpg "Settings Screenshot")
-![screenshot](pix/screenshot1.jpg "Settings Screenshot")
+Arrby Multiple notifications is Moodle's plugin that allows you to send a reminder to the enrolled student before the enrollment period has expired.
 
----------
+![screenshot](pix/screenshot.png "Settings Screenshot")
 
-Arrby Multiple notifications is Moodle's plugin that allow you to send a reminder to the enrolled student before the enrolmment period has expired.
+![screenshot](pix/screenshot1.png "Settings Screenshot")
 
 Documentation
 =============
