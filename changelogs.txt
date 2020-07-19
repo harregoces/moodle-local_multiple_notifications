@@ -1,0 +1,6 @@
+CHANGELOG
+Arrby Multiple notifications
+- - - -
+## [v1] July 19, 2020
++ Administration panel
++ Cron task to send notifications

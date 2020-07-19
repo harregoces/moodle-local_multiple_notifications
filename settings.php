@@ -50,6 +50,9 @@ if ( $hassiteconfig ){
 	foreach($records as $record) {
 		$url = new moodle_url('/local/multiple_notifications/new_email.php', array('id' => $record->id));
 		$editlink = $OUTPUT->action_icon($url, new pix_icon('t/edit',get_string('edit', 'local_multiple_notifications', $record->id)));
+
+		$url = new moodle_url('/local/multiple_notifications/new_email.php', array('id' => $record->id, 'action' => 'delete'));
+		$deletelink = $OUTPUT->action_icon($url, new pix_icon('i/trash',get_string('delete', 'local_multiple_notifications', $record->id)));
 		//$loglink = $OUTPUT->action_icon($url,new pix_icon('e/file-text', get_string('viewlogs', 'local_multiple_notifications', $record->id)));
 		$loglink = '';
 
@@ -57,7 +60,7 @@ if ( $hassiteconfig ){
 			$record->subject,
 			$record->message,
 			$record->expirythreshold,
-			new html_table_cell($editlink . "&nbsp;&nbsp;&nbsp;&nbsp;" . $loglink)
+			new html_table_cell($editlink . "&nbsp;&nbsp;&nbsp;&nbsp;" . $deletelink . "&nbsp;&nbsp;&nbsp;&nbsp;" . $loglink)
 		);
 		$table->data[] = $row;
 	}

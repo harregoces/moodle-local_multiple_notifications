@@ -22,15 +22,22 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 require_once('../../config.php');
 require_once($CFG->dirroot . '/local/multiple_notifications/email_form.php');
+
+defined('MOODLE_INTERNAL') || die();
+
 
 $url = new moodle_url('/local/multiple_notifications/new_email.php');
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('admin');
 $id = optional_param('id', 0, PARAM_INT);
+$action = optional_param('action', NULL, PARAM_RAW);
+
+if($action == 'delete' && $id) {
+	$DB->delete_records('multiple_notifications_email', array('id' => $id));
+	redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
+}
 
 $draftid_editor = file_get_submitted_draft_itemid('message');
 
