@@ -15,19 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * CLI update for manual enrolments expiration.
+ * Multiple notifications.
  *
  * Notes:
- *   - it is required to use the web server account when executing PHP CLI scripts
- *   - you need to change the "www-data" to match the apache user account
- *   - use "su" if "sudo" not available
+ * - it is required to use the web server account when executing PHP CLI scripts
+ * - you need to change the "www-data" to match the apache user account
+ * - use "su" if "sudo" not available
  *
- * @package    enrol_manual
- * @copyright  2012 Petr Skoda {@link http://skodak.org}
+ * @package    local_multiple_notifications
+ * @copyright 2020 Hernan Arregoces - Arrby
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define('CLI_SCRIPT', true);
+defined('MOODLE_INTERNAL') || die();
 
 require(__DIR__.'/../../../config.php');
 require_once("$CFG->libdir/clilib.php");
