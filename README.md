@@ -26,7 +26,7 @@ Hernan Arregoces
 
 Moodle profile: https://moodle.org/user/profile.php?id=1931915
 
-Linkedin: https://www.linkedin.com/in/willianmano
+Linkedin: https://www.linkedin.com/in/hernanarregoces/
 
 Installation
 ------------
