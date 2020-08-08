@@ -15,19 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Multiple notifications.
+ * Capabilities for paypal enrolment plugin.
  *
- * @package    local_multiple_notifications
- * @copyright 2020 Hernan Arregoces - Arrby
+ * @package    enrol_paypal
+ * @copyright  2010 Petr Skoda {@link http://skodak.org}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020080801;
-$plugin->requires = 2018120302.01;
-$plugin->cron = 0;
-$plugin->component = 'local_multiple_notifications';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = 'v1';
-$plugin->dependencies = [];
+$capabilities = array(
+
+    'local/multiple_notifications:configmagement' => array(
+	    'riskbitmask' => RISK_CONFIG,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW,
+        )
+    )
+
+);
+

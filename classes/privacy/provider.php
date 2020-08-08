@@ -22,20 +22,25 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace atto_accessibilityhelper\privacy;
+
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Arrby Multiple notifications plugin';
-$string['task_send_notifications'] = 'Task send notifications';
-$string['pluginname_desc'] = 'This plugin allows you to send email notification for your users before the enrollment period expires.';
-$string['subject'] = 'Subject';
-$string['subject_desc'] = 'Email Subject description';
-$string['message'] = 'Message';
-$string['message_desc'] = 'Email Message description';
-$string['expirythreshold'] = 'expiry threshold';
-$string['expirythreshold_desc'] = 'expiry threshold desc';
-$string['table_heading'] = 'Multiple Notifications records';
-$string['add_new_email'] = 'Add New Email';
-$string['back_to_settings'] = 'Back to settings';
-$string['erroremptysubject'] = 'Subject cannot be empty';
-$string['erroremptymessage'] = 'Message cannot be empty';
-$string['privacy:metadata'] = 'The Multiple Notifications plugins do not store user data.';
+/**
+ * Privacy Subsystem for local_multiple_notifications implementing null_provider.
+ *
+ * @copyright 2020 Hernan Arregoces<harregoces@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
+
+	/**
+	 * Get the language string identifier with the component's language
+	 * file to explain why this plugin stores no data.
+	 *
+	 * @return  string
+	 */
+	public static function get_reason() : string {
+		return 'privacy:metadata';
+	}
+}

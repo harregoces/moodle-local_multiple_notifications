@@ -23,8 +23,10 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+require_login();
 
-if ( $hassiteconfig ){
+if ( has_capability('local/multiple_notifications:configmagement', context_system::instance()) && $hassiteconfig ){
+
 
 	$settings = new admin_settingpage( 'local_multiple_notifications', get_string('pluginname', 'local_multiple_notifications'));
 	$ADMIN->add( 'localplugins', $settings );

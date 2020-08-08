@@ -26,7 +26,7 @@ require_once('../../config.php');
 require_once($CFG->dirroot . '/local/multiple_notifications/email_form.php');
 
 defined('MOODLE_INTERNAL') || die();
-
+require_login();
 
 $url = new moodle_url('/local/multiple_notifications/new_email.php');
 $PAGE->set_url($url);

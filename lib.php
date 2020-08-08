@@ -27,13 +27,6 @@ defined('MOODLE_INTERNAL') || die();
 function send_multiple_expiry_notifications($trace) {
     global $DB, $CFG;
 
-    $name = 'manual';
-    if (!enrol_is_enabled($name)) {
-		$trace->output('Processing '.$name.' enrol method not enabled...');
-        $trace->finished();
-        return;
-    }
-
     $expirynotifyhour = 23;
 
     if (!($trace instanceof progress_trace)) {
@@ -42,72 +35,46 @@ function send_multiple_expiry_notifications($trace) {
     }
 
     $timenow = time();
-    $notifytime = usergetmidnight($timenow, $CFG->timezone) + ($expirynotifyhour * 3600);
-
-    /*if ($timenow < $notifytime) {
-        $trace->output($name.' enrolment expiry notifications will be sent at '.userdate($notifytime, '', $CFG->timezone).'.');
-        $trace->finished();
-        return;
-    }*/
-
-    $trace->output('Processing '.$name.' enrolment expiration notifications...');
+    $trace->output('Processing multiple notifications process...');
 
     core_php_time_limit::raise();
     raise_memory_limit(MEMORY_HUGE);
 
     if ($notifications = $DB->get_records('multiple_notifications_email')) {
         foreach ($notifications as $notification) {
-            $id = $notification->id;
             $expirythreshold = $notification->expirythreshold;
 
             $sql = "SELECT ue.*, e.courseid, c.fullname as coursename, u.firstname as firstname, u.lastname as lastname
                   FROM {user_enrolments} ue 
-                  JOIN {enrol} e ON (e.id = ue.enrolid AND e.enrol = :name AND e.status = :enabled)
+                  JOIN {enrol} e ON (e.id = ue.enrolid AND e.status = :enabled)
                   JOIN {course} c ON (c.id = e.courseid)
                   JOIN {user} u ON (u.id = ue.userid AND u.deleted = 0 AND u.suspended = 0)
                   LEFT JOIN {multiple_notifications_logs} mnl ON mnl.enrolment_id = ue.id AND multiple_notification_email_id = :notification_id
-                 WHERE  mnl.id is null AND c.id IN (75,77,78,79) AND ue.status = :active AND ue.timeend > 0 AND ue.timeend > :now1 AND ue.timeend < (:expirythreshold + :now2)
+                 WHERE  mnl.id is null AND ue.status = :active AND ue.timeend > 0 AND ue.timeend > :now1 AND ue.timeend < (:expirythreshold + :now2)
               ORDER BY ue.enrolid ASC, u.lastname ASC, u.firstname ASC, u.id ASC";
-            $params = array('notification_id' => $notification->id, 'enabled'=>ENROL_INSTANCE_ENABLED, 'active'=>ENROL_USER_ACTIVE, 'now1'=>$timenow, 'now2'=>$timenow, 'name'=>$name, 'expirythreshold' => $expirythreshold);
-
+            $params = array('notification_id' => $notification->id, 'enabled'=>ENROL_INSTANCE_ENABLED, 'active'=>ENROL_USER_ACTIVE, 'now1'=>$timenow, 'now2'=>$timenow, 'expirythreshold' => $expirythreshold);
             $rs = $DB->get_recordset_sql($sql, $params);
 
-            $users = array();
-
             foreach($rs as $ue) {
-
-                $context = context_course::instance($ue->courseid);
-                $enroller = get_admin();
-
                 $user = $DB->get_record('user', array('id'=>$ue->userid));
-
                 if ($ue->timeend - $expirythreshold + 86400 < $timenow) {
                     $trace->output("user $ue->userid was already notified that enrolment in course $ue->courseid expires on ".userdate($ue->timeend, '', $CFG->timezone), 1);
                     continue;
                 }
-
                 notify_expiry_enrolled($user, $ue, $trace, $notification);
             }
-
             $rs->close();
-
         }
-
         $trace->output('...notification processing finished.');
         $trace->finished();
-
     } else {
 		$trace->output('Nothing to send');
 	}
-
 }
 
 function notify_expiry_enrolled($user, $ue, progress_trace $trace, $notification) {
     global $CFG,$DB;
-
-    $name = 'manual';
-
-    $oldforcelang = force_current_language($user->lang);
+    $forcelang = force_current_language($user->lang);
 
     $enroller = get_admin();
     $context = context_course::instance($ue->courseid);
@@ -124,7 +91,7 @@ function notify_expiry_enrolled($user, $ue, progress_trace $trace, $notification
     $message = new \core\message\message();
     $message->courseid          = $ue->courseid;
     $message->notification      = 1;
-    $message->component         = 'enrol_'.$name;
+    $message->component         = 'multiple_notifications';
     $message->name              = 'expiry_notification';
     $message->userfrom          = $enroller;
     $message->userto            = $user;
@@ -150,7 +117,7 @@ function notify_expiry_enrolled($user, $ue, progress_trace $trace, $notification
         $trace->output("error notifying user $ue->userid that enrolment in course $ue->courseid expires on ".userdate($ue->timeend, '', $CFG->timezone), 1);
     }
 
-    force_current_language($oldforcelang);
+    force_current_language($forcelang);
 }
 
 function replaceMessage($message,$ue){
@@ -167,16 +134,6 @@ function replaceMessage($message,$ue){
 
 function local_multiple_notifications_extend_settings_navigation($settingsnav, $context) {
 	global $CFG, $PAGE;
-
-	// Only add this settings item on non-site course pages.
-	//if (!$PAGE->course or $PAGE->course->id == 1) {
-	//	return;
-	//}
-
-	// Only let users with the appropriate capability see this settings item.
-	//if (!has_capability('moodle/backup:backupcourse', context_course::instance($PAGE->course->id))) {
-	//	return;
-	//}
 
 	if ($settingnode = $settingsnav->find('courseadmin', navigation_node::TYPE_COURSE)) {
 		$strfoo = get_string('pluginname', 'local_multiple_notifications');
