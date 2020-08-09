@@ -27,7 +27,6 @@ defined('MOODLE_INTERNAL') || die();
 require_once("$CFG->libdir/externallib.php");
 require_once("lib.php");
 
-class local_eenotify_external extends external_api
-{
+class local_eenotify_external extends external_api {
 
 }

@@ -32,16 +32,16 @@ $url = new moodle_url('/local/multiple_notifications/manage_email.php');
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('admin');
 $id = optional_param('id', 0, PARAM_INT);
-$action = optional_param('action', NULL, PARAM_RAW);
+$action = optional_param('action', null, PARAM_RAW);
 
 if ($action == 'delete' && $id) {
     $DB->delete_records('local_multiple_notifications_email', array('id' => $id));
     redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
 }
 
-$draftid_editor = file_get_submitted_draft_itemid('message');
+$draftidEditor = file_get_submitted_draft_itemid('message');
 
-$mform = new email_form(NULL, array('id' => $id));
+$mform = new email_form(null, array('id' => $id));
 if ($mform->is_cancelled()) {
     redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
 } else if ($data = $mform->get_data()) {
@@ -54,14 +54,17 @@ if ($mform->is_cancelled()) {
     redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
 } else if ($id) {
     $data = $DB->get_record('local_multiple_notifications_email', array('id' => $id));
-    $data->message = array('text' => $data->message, 'format' => FORMAT_HTML, 'itemid' => $draftid_editor);
+    $data->message = array('text' => $data->message, 'format' => FORMAT_HTML, 'itemid' => $draftidEditor);
     $mform->set_data($data);
 }
 
 $title = get_string('add_new_email', 'local_multiple_notifications');
 $PAGE->set_title($title);
 $PAGE->set_heading($title);
-$PAGE->navbar->add(get_string('back_to_settings', 'local_multiple_notifications'), new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
+$PAGE->navbar->add(
+    get_string('back_to_settings', 'local_multiple_notifications'), 
+    new moodle_url('/admin/settings.php',array('section' => 'local_multiple_notifications'))
+);
 
 echo $OUTPUT->header();
 $mform->display();

@@ -27,11 +27,19 @@ defined('MOODLE_INTERNAL') || die();
 require_once('../../config.php');
 require_once("$CFG->libdir/formslib.php");
 
-class email_form extends moodleform
-{
+/**
+ * Enrolment expiry notification Emails form.
+ *
+ * @package    local_eenotify
+ * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class email_form extends moodleform {
 
-    public function definition()
-    {
+    /**
+     * Form definition.
+     */
+    public function definition () {
         $mform = $this->_form;
 
         $mform->addElement('hidden', 'id', $this->_customdata['id']);
@@ -53,8 +61,14 @@ class email_form extends moodleform
 
     }
 
-    function validation($data, $files)
-    {
+    /**
+     * Validate this form.
+     *
+     * @param array $data submitted data
+     * @param array $files not used
+     * @return array errors
+     */
+    function validation ($data, $files) {
         $errors = parent::validation($data, $files);
 
         if (empty($data['message']['text'])) {

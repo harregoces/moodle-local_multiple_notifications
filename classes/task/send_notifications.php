@@ -26,24 +26,21 @@ namespace local_eenotify\task;
 
 defined('MOODLE_INTERNAL') || die();
 
-class send_notifications extends \core\task\scheduled_task
-{
+class send_notifications extends \core\task\scheduled_task {
 
     /**
      * Return the task's name as shown in admin screens.
      *
      * @return string
      */
-    public function get_name()
-    {
+    public function get_name () {
         return get_string('task_send_notifications', 'local_eenotify');
     }
 
     /**
      * Execute the task.
      */
-    public function execute()
-    {
+    public function execute () {
         global $CFG;
         require_once($CFG->dirroot . "/local/eenotify/lib.php");
         $trace = new \text_progress_trace();
