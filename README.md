@@ -1,7 +1,7 @@
-Moodle "Multiple notifications"
+Moodle "Enrolment expiry notification" plugins
 ===============================
 
-Arrby Multiple notifications is Moodle's plugin that allows you to send a reminder to the enrolled student before the enrollment period has expired.
+Enrolment expiry notification is Moodle's plugin that allows you to send a reminder to the enrolled student before the enrollment period has expired.
 
 ![screenshot](pix/screenshot.png "Settings Screenshot")
 

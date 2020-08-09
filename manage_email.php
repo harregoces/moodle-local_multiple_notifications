@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Multiple notifications.
+ * Enrolment expiry notification.
  *
- * @package    local_multiple_notifications
- * @copyright 2020 Hernan Arregoces - Arrby
+ * @package    local_eenotify
+ * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,14 +28,14 @@ require_once($CFG->dirroot . '/local/multiple_notifications/email_form.php');
 defined('MOODLE_INTERNAL') || die();
 require_login();
 
-$url = new moodle_url('/local/multiple_notifications/new_email.php');
+$url = new moodle_url('/local/multiple_notifications/manage_email.php');
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('admin');
 $id = optional_param('id', 0, PARAM_INT);
 $action = optional_param('action', NULL, PARAM_RAW);
 
-if($action == 'delete' && $id) {
-	$DB->delete_records('multiple_notifications_email', array('id' => $id));
+if ($action == 'delete' && $id) {
+	$DB->delete_records('local_multiple_notifications_email', array('id' => $id));
 	redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
 }
 
@@ -46,15 +46,15 @@ if ($mform->is_cancelled()) {
 	redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
 } else if ($data = $mform->get_data()) {
 	$data->message = $data->message['text'];
-	if(!$id) {
-		$DB->insert_record('multiple_notifications_email', $data);
+	if (!$id) {
+		$DB->insert_record('local_multiple_notifications_email', $data);
 	} else {
-		$DB->update_record('multiple_notifications_email', $data);
+		$DB->update_record('local_multiple_notifications_email', $data);
 	}
 	redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
-} else if ($id){
-	$data = $DB->get_record('multiple_notifications_email', array('id' => $id));
-	$data->message = array('text'=>$data->message, 'format'=>FORMAT_HTML, 'itemid' => $draftid_editor);
+} else if ($id) {
+	$data = $DB->get_record('local_multiple_notifications_email', array('id' => $id));
+	$data->message = array('text' => $data->message, 'format' => FORMAT_HTML, 'itemid' => $draftid_editor);
 	$mform->set_data($data);
 }
 

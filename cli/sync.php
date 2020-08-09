@@ -15,52 +15,52 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Multiple notifications.
+ * Enrolment expiry notification.
  *
  * Notes:
  * - it is required to use the web server account when executing PHP CLI scripts
  * - you need to change the "www-data" to match the apache user account
  * - use "su" if "sudo" not available
  *
- * @package    local_multiple_notifications
- * @copyright 2020 Hernan Arregoces - Arrby
+ * @package    local_eenotify
+ * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-require(__DIR__.'/../../../config.php');
+require(__DIR__ . '/../../../config.php');
 require_once("$CFG->libdir/clilib.php");
-require_once(__DIR__."/../lib.php");
+require_once(__DIR__ . "/../lib.php");
 
 // Now get cli options.
-list($options, $unrecognized) = cli_get_params(array('verbose'=>false, 'help'=>false), array('v'=>'verbose', 'h'=>'help'));
+list($options, $unrecognized) = cli_get_params(array('verbose' => false, 'help' => false), array('v' => 'verbose', 'h' => 'help'));
 
 if ($unrecognized) {
-    $unrecognized = implode("\n  ", $unrecognized);
-    cli_error(get_string('cliunknowoption', 'admin', $unrecognized));
+	$unrecognized = implode("\n  ", $unrecognized);
+	cli_error(get_string('cliunknowoption', 'admin', $unrecognized));
 }
 
 if ($options['help']) {
-    $help =
-        "Execute manual enrolments expiration sync and send notifications.
+	$help =
+		"Execute manual enrolments expiration sync and send notifications.
 
 Options:
 -v, --verbose         Print verbose progress information
 -h, --help            Print out this help
 
 Example:
-\$ sudo -u www-data /usr/bin/php local/multiple_notifications/cli/sync.php
+\$ sudo -u www-data /usr/bin/php local/eenotify/cli/sync.php
 ";
 
-    echo $help;
-    die;
+	echo $help;
+	die;
 }
 
 if (empty($options['verbose'])) {
-    $trace = new null_progress_trace();
+	$trace = new null_progress_trace();
 } else {
-    $trace = new text_progress_trace();
+	$trace = new text_progress_trace();
 }
 
 $result = send_multiple_expiry_notifications($trace);

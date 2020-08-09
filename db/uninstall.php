@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Multiple notifications.
+ * Enrolment expiry notification.
  *
- * @package    local_multiple_notifications
- * @copyright 2020 Hernan Arregoces - Arrby
+ * @package    local_eenotify
+ * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

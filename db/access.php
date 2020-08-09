@@ -15,25 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Capabilities for paypal enrolment plugin.
+ * Capabilities for enrolment expiry notification.
  *
- * @package    enrol_paypal
- * @copyright  2010 Petr Skoda {@link http://skodak.org}
+ * @package    local_eenotify
+ * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'local/multiple_notifications:configmagement' => array(
-	    'riskbitmask' => RISK_CONFIG,
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(
-            'manager' => CAP_ALLOW,
-        )
-    )
+	'local/eenotify:configmagement' => array(
+		'riskbitmask' => RISK_CONFIG,
+		'captype' => 'write',
+		'contextlevel' => CONTEXT_SYSTEM,
+		'archetypes' => array(
+			'manager' => CAP_ALLOW,
+		)
+	)
 
 );
 

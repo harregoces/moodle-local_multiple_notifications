@@ -15,16 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Multiple notifications.
+ * Enrolment expiry notification.
  *
- * @package    local_multiple_notifications
- * @copyright 2020 Hernan Arregoces - Arrby
+ * @package    local_eenotify
+ * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Arrby Multiple notifications plugin';
+$string['pluginname'] = 'Enrolment expiry notification';
 $string['task_send_notifications'] = 'Task send notifications';
 $string['pluginname_desc'] = 'This plugin allows you to send email notification for your users before the enrollment period expires.';
 $string['subject'] = 'Subject';
