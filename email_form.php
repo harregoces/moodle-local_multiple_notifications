@@ -30,41 +30,39 @@ require_once("$CFG->libdir/formslib.php");
 class email_form extends moodleform
 {
 
-	public function definition()
-	{
-		global $CFG;
-		$mform = $this->_form;
+    public function definition()
+    {
+        $mform = $this->_form;
 
-		$mform->addElement('hidden', 'id', $this->_customdata['id']);
+        $mform->addElement('hidden', 'id', $this->_customdata['id']);
 
-		$mform->addElement('text', 'subject', get_string('subject', 'local_eenotify'));
-		$mform->setType('subject', PARAM_RAW);
+        $mform->addElement('text', 'subject', get_string('subject', 'local_eenotify'));
+        $mform->setType('subject', PARAM_RAW);
 
-		$mform->addElement('editor', 'message', get_string('message', 'local_eenotify'), null, array());
-		$mform->setType('message', PARAM_RAW);
+        $mform->addElement('editor', 'message', get_string('message', 'local_eenotify'), null, array());
+        $mform->setType('message', PARAM_RAW);
 
-		$mform->addElement('text', 'expirythreshold', get_string('expirythreshold', 'local_eenotify'));
-		$mform->setType('expirythreshold', PARAM_RAW);
-		$mform->setDefault('expirythreshold', 1);
+        $mform->addElement('text', 'expirythreshold', get_string('expirythreshold', 'local_eenotify'));
+        $mform->setType('expirythreshold', PARAM_RAW);
+        $mform->setDefault('expirythreshold', 1);
 
-		$buttonarray = array();
-		$buttonarray[] = $mform->createElement('submit', 'submitbutton', get_string('savechanges'));
-		$buttonarray[] = $mform->createElement('cancel');
-		$mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
+        $buttonarray = array();
+        $buttonarray[] = $mform->createElement('submit', 'submitbutton', get_string('savechanges'));
+        $buttonarray[] = $mform->createElement('cancel');
+        $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
 
+    }
 
-	}
+    function validation($data, $files)
+    {
+        $errors = parent::validation($data, $files);
 
-	function validation($data, $files)
-	{
-		$errors = parent::validation($data, $files);
-
-		if (empty($data['message']['text'])) {
-			$errors['message'] = get_string('erroremptymessage', 'local_eenotify');
-		}
-		if (empty($data['subject'])) {
-			$errors['subject'] = get_string('erroremptysubject', 'local_eenotify');
-		}
-		return $errors;
-	}
+        if (empty($data['message']['text'])) {
+            $errors['message'] = get_string('erroremptymessage', 'local_eenotify');
+        }
+        if (empty($data['subject'])) {
+            $errors['subject'] = get_string('erroremptysubject', 'local_eenotify');
+        }
+        return $errors;
+    }
 }

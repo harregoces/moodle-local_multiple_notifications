@@ -37,13 +37,13 @@ require_once(__DIR__ . "/../lib.php");
 list($options, $unrecognized) = cli_get_params(array('verbose' => false, 'help' => false), array('v' => 'verbose', 'h' => 'help'));
 
 if ($unrecognized) {
-	$unrecognized = implode("\n  ", $unrecognized);
-	cli_error(get_string('cliunknowoption', 'admin', $unrecognized));
+    $unrecognized = implode("\n  ", $unrecognized);
+    cli_error(get_string('cliunknowoption', 'admin', $unrecognized));
 }
 
 if ($options['help']) {
-	$help =
-		"Execute manual enrolments expiration sync and send notifications.
+    $help =
+        "Execute manual enrolments expiration sync and send notifications.
 
 Options:
 -v, --verbose         Print verbose progress information
@@ -53,14 +53,14 @@ Example:
 \$ sudo -u www-data /usr/bin/php local/eenotify/cli/sync.php
 ";
 
-	echo $help;
-	die;
+    echo $help;
+    die;
 }
 
 if (empty($options['verbose'])) {
-	$trace = new null_progress_trace();
+    $trace = new null_progress_trace();
 } else {
-	$trace = new text_progress_trace();
+    $trace = new text_progress_trace();
 }
 
 $result = send_multiple_expiry_notifications($trace);

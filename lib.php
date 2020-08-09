@@ -35,8 +35,6 @@ function send_multiple_expiry_notifications($trace)
 {
 	global $DB, $CFG;
 
-	$expirynotifyhour = 23;
-
 	if (!($trace instanceof progress_trace)) {
 		$trace = $trace ? new text_progress_trace() : new null_progress_trace();
 		debugging('enrol_plugin::send_expiry_notifications() now expects progress_trace instance as parameter!', DEBUG_DEVELOPER);
@@ -142,7 +140,7 @@ function notify_expiry_enrolled($user, $ue, progress_trace $trace, $notification
 /**
  * Replace placeholders for real data.
  *
- * @param string $string
+ * @param string $message
  * @param stdClass $ue record from user_enrolments table
  * @return string
  */

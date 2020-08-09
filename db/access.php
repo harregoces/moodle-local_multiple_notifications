@@ -25,14 +25,14 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-	'local/eenotify:configmagement' => array(
-		'riskbitmask' => RISK_CONFIG,
-		'captype' => 'write',
-		'contextlevel' => CONTEXT_SYSTEM,
-		'archetypes' => array(
-			'manager' => CAP_ALLOW,
-		)
-	)
+    'local/eenotify:configmagement' => array(
+        'riskbitmask' => RISK_CONFIG,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW,
+        )
+    )
 
 );
 

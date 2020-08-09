@@ -28,45 +28,45 @@ require_login();
 if (has_capability('local/eenotify:configmagement', context_system::instance()) && $hassiteconfig) {
 
 
-	$settings = new admin_settingpage('local_eenotify', get_string('pluginname', 'local_eenotify'));
-	$ADMIN->add('localplugins', $settings);
-	$settings->add(new admin_setting_heading('local_eenotify', '', get_string('pluginname', 'local_eenotify')));
+    $settings = new admin_settingpage('local_eenotify', get_string('pluginname', 'local_eenotify'));
+    $ADMIN->add('localplugins', $settings);
+    $settings->add(new admin_setting_heading('local_eenotify', '', get_string('pluginname', 'local_eenotify')));
 
-	$table = new html_table();
-	$table->attributes['class'] = 'generaltable mod_index';
-	$table->head = array(
-		get_string('subject', 'local_eenotify'),
-		get_string('message', 'local_eenotify'),
-		get_string('expirythreshold', 'local_eenotify'),
-		get_string('actions', 'local_eenotify')
-	);
-	$table->wrap = array('nowrap', 'nowrap', 'nowrap', 'nowrap');
+    $table = new html_table();
+    $table->attributes['class'] = 'generaltable mod_index';
+    $table->head = array(
+        get_string('subject', 'local_eenotify'),
+        get_string('message', 'local_eenotify'),
+        get_string('expirythreshold', 'local_eenotify'),
+        get_string('actions', 'local_eenotify')
+    );
+    $table->wrap = array('nowrap', 'nowrap', 'nowrap', 'nowrap');
 
-	$addnewstr = get_string('add_new_email', 'local_eenotify');
-	$addnewurl = new moodle_url('/local/eenotify/manage_email.php', array());
-	$addnewrow = '<a href="' . $addnewurl->out() . '" title="">' . $addnewstr . '</a>';
+    $addnewstr = get_string('add_new_email', 'local_eenotify');
+    $addnewurl = new moodle_url('/local/eenotify/manage_email.php', array());
+    $addnewrow = '<a href="' . $addnewurl->out() . '" title="">' . $addnewstr . '</a>';
 
-	$table->data = array();
+    $table->data = array();
 
-	$records = $DB->get_records('local_eenotify_email');
-	foreach ($records as $record) {
-		$url = new moodle_url('/local/eenotify/manage_email.php', array('id' => $record->id));
-		$editlink = $OUTPUT->action_icon($url, new pix_icon('t/edit', get_string('edit', 'local_eenotify', $record->id)));
+    $records = $DB->get_records('local_eenotify_email');
+    foreach ($records as $record) {
+        $url = new moodle_url('/local/eenotify/manage_email.php', array('id' => $record->id));
+        $editlink = $OUTPUT->action_icon($url, new pix_icon('t/edit', get_string('edit', 'local_eenotify', $record->id)));
 
-		$url = new moodle_url('/local/eenotify/manage_email.php', array('id' => $record->id, 'action' => 'delete'));
-		$deletelink = $OUTPUT->action_icon($url, new pix_icon('i/trash', get_string('delete', 'local_eenotify', $record->id)));
+        $url = new moodle_url('/local/eenotify/manage_email.php', array('id' => $record->id, 'action' => 'delete'));
+        $deletelink = $OUTPUT->action_icon($url, new pix_icon('i/trash', get_string('delete', 'local_eenotify', $record->id)));
 
-		$row = array(
-			$record->subject,
-			$record->message,
-			$record->expirythreshold,
-			new html_table_cell($editlink . "&nbsp;&nbsp;&nbsp;&nbsp;" . $deletelink)
-		);
-		$table->data[] = $row;
-	}
+        $row = array(
+            $record->subject,
+            $record->message,
+            $record->expirythreshold,
+            new html_table_cell($editlink . "&nbsp;&nbsp;&nbsp;&nbsp;" . $deletelink)
+        );
+        $table->data[] = $row;
+    }
 
-	$table->data[] = array($addnewrow);
+    $table->data[] = array($addnewrow);
 
-	$settings->add(new admin_setting_heading('local_eenotify', '', html_writer::table($table)));
+    $settings->add(new admin_setting_heading('local_eenotify', '', html_writer::table($table)));
 
 }

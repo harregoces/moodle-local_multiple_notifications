@@ -35,27 +35,27 @@ $id = optional_param('id', 0, PARAM_INT);
 $action = optional_param('action', NULL, PARAM_RAW);
 
 if ($action == 'delete' && $id) {
-	$DB->delete_records('local_multiple_notifications_email', array('id' => $id));
-	redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
+    $DB->delete_records('local_multiple_notifications_email', array('id' => $id));
+    redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
 }
 
 $draftid_editor = file_get_submitted_draft_itemid('message');
 
 $mform = new email_form(NULL, array('id' => $id));
 if ($mform->is_cancelled()) {
-	redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
+    redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
 } else if ($data = $mform->get_data()) {
-	$data->message = $data->message['text'];
-	if (!$id) {
-		$DB->insert_record('local_multiple_notifications_email', $data);
-	} else {
-		$DB->update_record('local_multiple_notifications_email', $data);
-	}
-	redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
+    $data->message = $data->message['text'];
+    if (!$id) {
+        $DB->insert_record('local_multiple_notifications_email', $data);
+    } else {
+        $DB->update_record('local_multiple_notifications_email', $data);
+    }
+    redirect(new moodle_url('/admin/settings.php', array('section' => 'local_multiple_notifications')));
 } else if ($id) {
-	$data = $DB->get_record('local_multiple_notifications_email', array('id' => $id));
-	$data->message = array('text' => $data->message, 'format' => FORMAT_HTML, 'itemid' => $draftid_editor);
-	$mform->set_data($data);
+    $data = $DB->get_record('local_multiple_notifications_email', array('id' => $id));
+    $data->message = array('text' => $data->message, 'format' => FORMAT_HTML, 'itemid' => $draftid_editor);
+    $mform->set_data($data);
 }
 
 $title = get_string('add_new_email', 'local_multiple_notifications');
