@@ -54,7 +54,7 @@ function send_multiple_expiry_notifications ($trace) {
                   JOIN {enrol} e ON (e.id = ue.enrolid AND e.status = :enabled)
                   JOIN {course} c ON (c.id = e.courseid)
                   JOIN {user} u ON (u.id = ue.userid AND u.deleted = 0 AND u.suspended = 0)
-                  LEFT JOIN {local_multiple_notifications_logs} mnl ON mnl.enrolment_id = ue.id 
+                  LEFT JOIN {local_multiple_notifications_logs} mnl ON mnl.enrolment_id = ue.id
                       AND multiple_notifications_email_id = :notification_id
                  WHERE  mnl.id is null
                     AND ue.status = :active
