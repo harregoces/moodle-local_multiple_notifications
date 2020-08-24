@@ -55,10 +55,14 @@ function send_multiple_expiry_notifications ($trace) {
                   JOIN {course} c ON (c.id = e.courseid)
                   JOIN {user} u ON (u.id = ue.userid AND u.deleted = 0 AND u.suspended = 0)
                   LEFT JOIN {local_eenotify_logs} mnl ON mnl.enrolment_id = ue.id AND eenotify_email_id = :notification_id
-                 WHERE  mnl.id is null AND ue.status = :active AND ue.timeend > 0 AND ue.timeend > :now1 AND ue.timeend < (:expirythreshold + :now2)
+                 WHERE  mnl.id is null 
+                    AND ue.status = :active 
+                    AND ue.timeend > 0 
+                    AND ue.timeend > :now1 
+                    AND ue.timeend < (:expirythreshold + :now2)
               ORDER BY ue.enrolid ASC, u.lastname ASC, u.firstname ASC, u.id ASC";
             $params = array(
-                'notification_id' => $notification->id, 
+                'notification_id' => $notification->id,
                 'enabled' => ENROL_INSTANCE_ENABLED,
                 'active' => ENROL_USER_ACTIVE,
                 'now1' => $timenow,
@@ -108,7 +112,7 @@ function notify_expiry_enrolled ($user, $ue, progress_trace $trace, $notificatio
     $a->enroller = fullname($enroller, has_capability('moodle/site:viewfullnames', $context, $user));
 
     $subject = $notification->subject;
-    $body = replaceMessage($notification->message, $ue);
+    $body = replace_strings($notification->message, $ue);
 
     $message = new \core\message\message();
     $message->courseid = $ue->courseid;
@@ -149,7 +153,7 @@ function notify_expiry_enrolled ($user, $ue, progress_trace $trace, $notificatio
  * @param stdClass $ue record from user_enrolments table
  * @return string
  */
-function replaceMessage ($message, $ue) {
+function replace_strings ($message, $ue) {
     global $CFG;
 
     $message = str_replace("[firstname]", $ue->firstname, $message);
