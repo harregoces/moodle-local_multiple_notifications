@@ -55,10 +55,10 @@ function send_multiple_expiry_notifications ($trace) {
                   JOIN {course} c ON (c.id = e.courseid)
                   JOIN {user} u ON (u.id = ue.userid AND u.deleted = 0 AND u.suspended = 0)
                   LEFT JOIN {local_eenotify_logs} mnl ON mnl.enrolment_id = ue.id AND eenotify_email_id = :notification_id
-                 WHERE  mnl.id is null 
+                 WHERE  mnl.id is null
                     AND ue.status = :active 
-                    AND ue.timeend > 0 
-                    AND ue.timeend > :now1 
+                    AND ue.timeend > 0
+                    AND ue.timeend > :now1
                     AND ue.timeend < (:expirythreshold + :now2)
               ORDER BY ue.enrolid ASC, u.lastname ASC, u.firstname ASC, u.id ASC";
             $params = array(
@@ -74,7 +74,9 @@ function send_multiple_expiry_notifications ($trace) {
             foreach ($rs as $ue) {
                 $user = $DB->get_record('user', array('id' => $ue->userid));
                 if ($ue->timeend - $expirythreshold + 86400 < $timenow) {
-                    $trace->output("user $ue->userid was already notified that enrolment in course $ue->courseid expires on " . userdate($ue->timeend, '', $CFG->timezone), 1);
+                    $trace->output("user $ue->userid was already notified that enrolment in course $ue->courseid expires on " 
+                        . userdate($ue->timeend, '', $CFG->timezone), 1
+                    );
                     continue;
                 }
                 notify_expiry_enrolled($user, $ue, $trace, $notification);
@@ -130,7 +132,8 @@ function notify_expiry_enrolled ($user, $ue, progress_trace $trace, $notificatio
     $message->contexturl = (string)new moodle_url('/course/view.php', array('id' => $ue->courseid));
 
     if (message_send($message)) {
-        $trace->output("notifying user $ue->userid that enrolment in course $ue->courseid expires on " . userdate($ue->timeend, '', $CFG->timezone), 1);
+        $trace->output("notifying user $ue->userid that enrolment in course $ue->courseid expires on " 
+            . userdate($ue->timeend, '', $CFG->timezone), 1);
 
         $dataobject = array(
             'multiple_notification_email_id' => $notification->id,
@@ -140,7 +143,8 @@ function notify_expiry_enrolled ($user, $ue, progress_trace $trace, $notificatio
         $DB->insert_record('local_eenotify_logs', $dataobject);
 
     } else {
-        $trace->output("error notifying user $ue->userid that enrolment in course $ue->courseid expires on " . userdate($ue->timeend, '', $CFG->timezone), 1);
+        $trace->output("error notifying user $ue->userid that enrolment in course $ue->courseid expires on " 
+            . userdate($ue->timeend, '', $CFG->timezone), 1);
     }
 
     force_current_language($forcelang);
