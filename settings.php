@@ -30,7 +30,9 @@ if (has_capability('local/multiple_notifications:configmagement', context_system
 
     $settings = new admin_settingpage('local_multiple_notifications', get_string('pluginname', 'local_multiple_notifications'));
     $ADMIN->add('localplugins', $settings);
-    $settings->add(new admin_setting_heading('local_multiple_notifications', '', get_string('pluginname', 'local_multiple_notifications')));
+    $settings->add(
+        new admin_setting_heading('local_multiple_notifications', '', get_string('pluginname', 'local_multiple_notifications'))
+    );
 
     $table = new html_table();
     $table->attributes['class'] = 'generaltable mod_index';
@@ -51,10 +53,14 @@ if (has_capability('local/multiple_notifications:configmagement', context_system
     $records = $DB->get_records('local_multiple_notifications_email');
     foreach ($records as $record) {
         $url = new moodle_url('/local/multiple_notifications/manage_email.php', array('id' => $record->id));
-        $editlink = $OUTPUT->action_icon($url, new pix_icon('t/edit', get_string('edit', 'local_multiple_notifications', $record->id)));
+        $editlink = $OUTPUT->action_icon($url, 
+            new pix_icon('t/edit', get_string('edit', 'local_multiple_notifications', $record->id))
+        );
 
         $url = new moodle_url('/local/multiple_notifications/manage_email.php', array('id' => $record->id, 'action' => 'delete'));
-        $deletelink = $OUTPUT->action_icon($url, new pix_icon('i/trash', get_string('delete', 'local_multiple_notifications', $record->id)));
+        $deletelink = $OUTPUT->action_icon($url, 
+            new pix_icon('i/trash', get_string('delete', 'local_multiple_notifications', $record->id))
+        );
 
         $row = array(
             $record->subject,
