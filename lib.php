@@ -50,14 +50,21 @@ function send_multiple_expiry_notifications ($trace) {
             $expirythreshold = $notification->expirythreshold;
 
             $sql = "SELECT ue.*, e.courseid, c.fullname as coursename, u.firstname as firstname, u.lastname as lastname
-                  FROM {user_enrolments} ue 
+                  FROM {user_enrolments} ue
                   JOIN {enrol} e ON (e.id = ue.enrolid AND e.status = :enabled)
                   JOIN {course} c ON (c.id = e.courseid)
                   JOIN {user} u ON (u.id = ue.userid AND u.deleted = 0 AND u.suspended = 0)
                   LEFT JOIN {local_eenotify_logs} mnl ON mnl.enrolment_id = ue.id AND eenotify_email_id = :notification_id
                  WHERE  mnl.id is null AND ue.status = :active AND ue.timeend > 0 AND ue.timeend > :now1 AND ue.timeend < (:expirythreshold + :now2)
               ORDER BY ue.enrolid ASC, u.lastname ASC, u.firstname ASC, u.id ASC";
-            $params = array('notification_id' => $notification->id, 'enabled' => ENROL_INSTANCE_ENABLED, 'active' => ENROL_USER_ACTIVE, 'now1' => $timenow, 'now2' => $timenow, 'expirythreshold' => $expirythreshold);
+            $params = array(
+                'notification_id' => $notification->id, 
+                'enabled' => ENROL_INSTANCE_ENABLED,
+                'active' => ENROL_USER_ACTIVE,
+                'now1' => $timenow,
+                'now2' => $timenow,
+                'expirythreshold' => $expirythreshold
+            );
             $rs = $DB->get_recordset_sql($sql, $params);
 
             foreach ($rs as $ue) {

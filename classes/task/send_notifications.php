@@ -26,6 +26,13 @@ namespace local_eenotify\task;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * A scheduled task for send the notifications.
+ *
+ * @package    local_eenotify
+ * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class send_notifications extends \core\task\scheduled_task {
 
     /**

@@ -68,7 +68,7 @@ class email_form extends moodleform {
      * @param array $files not used
      * @return array errors
      */
-    function validation ($data, $files) {
+    public function validation ($data, $files) {
         $errors = parent::validation($data, $files);
 
         if (empty($data['message']['text'])) {
