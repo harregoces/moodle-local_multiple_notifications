@@ -17,7 +17,7 @@
 /**
  * Enrolment expiry notification.
  *
- * @package    local_eenotify
+ * @package    local_multiple_notifications
  * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,7 +30,7 @@ require_once("$CFG->libdir/formslib.php");
 /**
  * Enrolment expiry notification Emails form.
  *
- * @package    local_eenotify
+ * @package    local_multiple_notifications
  * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -44,13 +44,13 @@ class email_form extends moodleform {
 
         $mform->addElement('hidden', 'id', $this->_customdata['id']);
 
-        $mform->addElement('text', 'subject', get_string('subject', 'local_eenotify'));
+        $mform->addElement('text', 'subject', get_string('subject', 'local_multiple_notifications'));
         $mform->setType('subject', PARAM_RAW);
 
-        $mform->addElement('editor', 'message', get_string('message', 'local_eenotify'), null, array());
+        $mform->addElement('editor', 'message', get_string('message', 'local_multiple_notifications'), null, array());
         $mform->setType('message', PARAM_RAW);
 
-        $mform->addElement('text', 'expirythreshold', get_string('expirythreshold', 'local_eenotify'));
+        $mform->addElement('text', 'expirythreshold', get_string('expirythreshold', 'local_multiple_notifications'));
         $mform->setType('expirythreshold', PARAM_RAW);
         $mform->setDefault('expirythreshold', 1);
 
@@ -72,10 +72,10 @@ class email_form extends moodleform {
         $errors = parent::validation($data, $files);
 
         if (empty($data['message']['text'])) {
-            $errors['message'] = get_string('erroremptymessage', 'local_eenotify');
+            $errors['message'] = get_string('erroremptymessage', 'local_multiple_notifications');
         }
         if (empty($data['subject'])) {
-            $errors['subject'] = get_string('erroremptysubject', 'local_eenotify');
+            $errors['subject'] = get_string('erroremptysubject', 'local_multiple_notifications');
         }
         return $errors;
     }

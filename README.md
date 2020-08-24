@@ -1,7 +1,7 @@
-Moodle "Enrolment expiry notification" plugins [![Build Status](https://travis-ci.org/harregoces/moodle-local_eenotify.svg?branch=master)](https://travis-ci.org/harregoces/moodle-local_eenotify)
+Moodle "Enrolment expiry multiple notification" plugins [![Build Status](https://travis-ci.org/harregoces/moodle-local_multiple_notifications.svg?branch=master)](https://travis-ci.org/harregoces/moodle-local_multiple_notifications)
 ===============================
 
-Enrolment expiry notification is Moodle's plugin that allows you to send a reminder to the enrolled student before the enrollment period has expired.
+Enrolment expiry multiple notification is Moodle's plugin that allows you to send a reminder to the enrolled student before the enrollment period has expired.
 
 ![screenshot](pix/screenshot.png "Settings Screenshot")
 

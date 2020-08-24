@@ -17,7 +17,7 @@
 /**
  * Enrolment expiry notification.
  *
- * @package    local_eenotify
+ * @package    local_multiple_notifications
  * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->version = 2020080801;
 $plugin->requires = 2018120302.01;
 $plugin->cron = 0;
-$plugin->component = 'local_eenotify';
+$plugin->component = 'local_multiple_notifications';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = 'v1';
 $plugin->dependencies = [];

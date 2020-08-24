@@ -22,7 +22,7 @@
  * - you need to change the "www-data" to match the apache user account
  * - use "su" if "sudo" not available
  *
- * @package    local_eenotify
+ * @package    local_multiple_notifications
  * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -51,7 +51,7 @@ Options:
 -h, --help            Print out this help
 
 Example:
-\$ sudo -u www-data /usr/bin/php local/eenotify/cli/sync.php
+\$ sudo -u www-data /usr/bin/php local/multiple_notifications/cli/sync.php
 ";
 
     echo $help;

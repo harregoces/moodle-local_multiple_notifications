@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/eenotify/db" VERSION="20200809" COMMENT="XMLDB file for Moodle local_eenotify plugins."
+<XMLDB PATH="local/multiple_notifications/db" VERSION="20200809" COMMENT="XMLDB file for Moodle local_multiple_notifications plugins."
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="local_eenotify_email" COMMENT="Emails notifications">
+    <TABLE NAME="local_multiple_notifications_email" COMMENT="Emails notifications">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="subject" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The message subject"/>
@@ -15,7 +15,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="local_eenotify_logs" COMMENT="Logs the sync request result">
+    <TABLE NAME="local_multiple_notifications_logs" COMMENT="Logs the sync request result">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="email_id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
@@ -24,7 +24,7 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="email_id" TYPE="foreign" FIELDS="email_id" REFTABLE="local_eenotify_email" REFFIELDS="id"/>
+        <KEY NAME="email_id" TYPE="foreign" FIELDS="email_id" REFTABLE="local_multiple_notifications_email" REFFIELDS="id"/>
         <KEY NAME="enrolment_id" TYPE="foreign" FIELDS="enrolment_id" REFTABLE="user_enrolments" REFFIELDS="id"/>
       </KEYS>
     </TABLE>

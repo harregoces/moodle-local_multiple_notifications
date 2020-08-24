@@ -17,19 +17,19 @@
 /**
  * Enrolment expiry notification.
  *
- * @package    local_eenotify
+ * @package    local_multiple_notifications
  * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace local_eenotify\task;
+namespace local_multiple_notifications\task;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
  * A scheduled task for send the notifications.
  *
- * @package    local_eenotify
+ * @package    local_multiple_notifications
  * @copyright 2020 Hernan Arregoces <harregoces@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -41,7 +41,7 @@ class send_notifications extends \core\task\scheduled_task {
      * @return string
      */
     public function get_name () {
-        return get_string('task_send_notifications', 'local_eenotify');
+        return get_string('task_send_notifications', 'local_multiple_notifications');
     }
 
     /**
@@ -49,7 +49,7 @@ class send_notifications extends \core\task\scheduled_task {
      */
     public function execute () {
         global $CFG;
-        require_once($CFG->dirroot . "/local/eenotify/lib.php");
+        require_once($CFG->dirroot . "/local/multiple_notifications/lib.php");
         $trace = new \text_progress_trace();
         send_multiple_expiry_notifications($trace);
     }
